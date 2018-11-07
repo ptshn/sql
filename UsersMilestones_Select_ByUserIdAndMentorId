@@ -1,0 +1,35 @@
+ALTER PROC [dbo].[UsersMilestones_Select_ByUserIdAndMentorId]
+
+@UserId int
+, @MentorId int
+
+AS
+
+SELECT 
+a.Id as Id
+, a.UserId as UserId
+, a.MentorId as MentorId
+, a.IsCompleted as IsCompleted
+, a.MilestoneId as MilestoneId
+
+, b.FirstName as FirstName
+, b.LastName as LastName
+, b.Email as Email
+, b.UserTypeId as UserTypeId
+, b.IsConfirmed as IsConfirmed
+
+, c.Id as MilestoneListId
+, c.Description as Description
+, c.IsCustomCreateByMentor as IsCustomCreateByMentor
+, c.CustomMentorId  as CustomMentorId
+
+FROM
+UsersMilestones AS a
+JOIN Users AS b
+ON (a.MentorId = b.Id)
+JOIN Milestones AS c
+ON (a.MilestoneId = c.Id)
+
+
+
+WHERE (UserId = @UserId AND MentorId = @MentorId)
