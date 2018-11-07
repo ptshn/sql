@@ -1,0 +1,14 @@
+SELECT a.ReviewerId as ReviewerId, CAST(AVG(CAST(a.StarRating AS DECIMAL(18,2))) AS DECIMAL(10,2)) as AvgRating
+, b.FirstName as FirstName, b.LastName as LastName, b.UserTypeId as UserTypeId
+, c.ImageUrl as ImageUrl
+
+FROM 
+Reviews as a
+JOIN Users as b
+ON (a.ReviewerId = b.Id)
+JOIN UserProfileInfos as c
+ON (a.ReviewerId = c.UserId)
+
+WHERE b.UserTypeId = 5 OR b.UserTypeId = 3
+
+GROUP BY a.ReviewerId, b.FirstName, b.LastName, c.ImageUrl, b.UserTypeId
